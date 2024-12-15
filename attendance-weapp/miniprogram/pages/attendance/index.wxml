@@ -1,0 +1,33 @@
+<view wx:if="{{!currentLesson}}">
+  <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o" text="现在没有上课噢~" />
+  <van-empty description="当前无需考勤" />
+</view>
+<view wx:else>
+  <van-notice-bar color="#1989fa" background="#ecf9ff" left-icon="info-o" text="{{isAttendance ? '你已完成考勤~': '你有一门课程需要考勤~'}}" />
+  <van-cell title="课程信息" use-label-slot class="cell">
+    <view slot="label">
+      <view>名称：{{currentLesson.lessonName}}</view>
+      <view>时间：今天 {{currentLesson.time}}</view>
+      <view>地点：{{currentLesson.location}}</view>
+      <view>教师：{{currentLesson.teacher}}</view>
+    </view>
+  </van-cell>
+  <van-cell title="当前定位" use-label-slot class="cell" value="{{isLocationCorrect ? '已到达' : '未到达'}}" center>
+    <view slot="label">
+      <view>到达教室后，获取定位</view>
+      <van-button wx:if="{{!isLocationCorrect}}" type="info" plain icon="location-o" bind:click="getLocation" class="btn">
+        获取定位
+      </van-button>
+    </view>
+    <van-icon slot="right-icon" name="{{isLocationCorrect ? 'success' : 'cross'}}" class="{{isLocationCorrect ? 'success' : 'cross'}}" />
+  </van-cell>
+  <van-cell title="课堂考勤" use-label-slot class="cell" value="{{isAttendance? '考勤成功' : '未考勤'}}" center>
+    <view slot="label">
+      <view>定位成功后，即可人脸识别</view>
+      <van-button wx:if="{{!isAttendance}}" disabled="{{!isLocationCorrect}}" bind:click="faceRecognition" type="info" plain icon="smile-o" class="btn">
+        人脸识别
+      </van-button>
+    </view>
+    <van-icon slot="right-icon" name="{{isAttendance ? 'success' : 'cross'}}" class="{{isAttendance ? 'success' : 'cross'}}" />
+  </van-cell>
+</view>

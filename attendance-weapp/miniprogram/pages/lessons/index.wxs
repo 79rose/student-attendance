@@ -1,0 +1,35 @@
+var daysMap = {
+  '1': '星期一',
+  '2': '星期二',
+  '3': '星期三',
+  '4': '星期四',
+  '5': '星期五',
+  '6': '星期六',
+  '7': '星期日'
+}
+
+/**
+ * 星期字符串格式化。
+ * '2,4' => '星期二，星期四'
+ */
+var formatDays = function (days) {
+  return days
+    .split(',')
+    .map(function (item) {
+      return daysMap[item]
+    })
+    .join('，')
+}
+
+/**
+ * 考勤情况
+ */
+var absenceDays = function (teachingDays, attendanceDays) {
+  var days = teachingDays - attendanceDays
+  return days <= 0 ? '满勤' : '缺勤 ' + days + ' 天'
+}
+
+module.exports = {
+  formatDays: formatDays,
+  absenceDays: absenceDays
+}
